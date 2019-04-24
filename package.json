@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "cra-typescript",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,10 +13,13 @@
     "typescript": "3.4.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "echo 'REACT_APP_ENV=dev' > .env && react-scripts start",
+    "build": "echo 'REACT_APP_ENV=prod' > .env && react-scripts build",
+    "build-stg": "echo 'REACT_APP_ENV=stg' > .env && react-scripts build",
+    "test": "npm run prettier-check && react-scripts test --env=jsdom --modulePaths=src",
+    "eject": "react-scripts eject",
+    "prettier-check": "prettier --check 'src/**/*.{tsx,ts,js}'",
+    "prettier": "prettier --write 'src/**/*.{tsx,ts,js}'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +35,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "husky": "^2.1.0",
+    "prettier": "^1.17.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run prettier-check"
+    }
   }
 }
